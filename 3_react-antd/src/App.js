@@ -1,19 +1,112 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {
+    Button,
+    Calendar,
+    Timeline,
+    Menu, Icon, Switch
+} from 'antd';
+
+const SubMenu = Menu.SubMenu;
 
 class App extends Component {
+
+    onPanelChange = (value, mode) => {
+        console.log(value, mode);
+    }
+
+
+    state = {
+        theme: 'dark',
+        current: '1',
+    }
+    changeTheme = (value) => {
+        this.setState({
+            theme: value ? 'dark' : 'light',
+        });
+    }
+    handleClick = (e) => {
+        console.log('click ', e);
+        this.setState({
+            current: e.key,
+        });
+    }
+
+
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+        <div>
+
+
+
+            <Button type="primary">Primary</Button>
+            <Button>Default</Button>
+            <Button type="dashed">Dashed</Button>
+            <Button type="danger">Danger</Button>
+
+
+
+            <div style={{ width: 290, border: '1px solid #d9d9d9', borderRadius: 4 }}>
+                <Calendar fullscreen={false} onPanelChange={this.onPanelChange} />
+            </div>
+
+
+
+            <Timeline>
+                <Timeline.Item color="green">Create a services site 2015-09-01</Timeline.Item>
+                <Timeline.Item color="green">Create a services site 2015-09-01</Timeline.Item>
+                <Timeline.Item color="red">
+                    <p>Solve initial network problems 1</p>
+                    <p>Solve initial network problems 2</p>
+                    <p>Solve initial network problems 3 2015-09-01</p>
+                </Timeline.Item>
+                <Timeline.Item>
+                    <p>Technical testing 1</p>
+                    <p>Technical testing 2</p>
+                    <p>Technical testing 3 2015-09-01</p>
+                </Timeline.Item>
+            </Timeline>
+
+
+
+            <Switch
+                checked={this.state.theme === 'dark'}
+                onChange={this.changeTheme}
+                checkedChildren="Dark"
+                unCheckedChildren="Light"
+            />
+            <br />
+            <br />
+            <Menu
+                theme={this.state.theme}
+                onClick={this.handleClick}
+                style={{ width: 240 }}
+                defaultOpenKeys={['sub1']}
+                selectedKeys={[this.state.current]}
+                mode="inline"
+            >
+                <SubMenu key="sub1" title={<span><Icon type="mail" /><span>Navigation One</span></span>}>
+                    <Menu.Item key="1">Option 1</Menu.Item>
+                    <Menu.Item key="2">Option 2</Menu.Item>
+                    <Menu.Item key="3">Option 3</Menu.Item>
+                    <Menu.Item key="4">Option 4</Menu.Item>
+                </SubMenu>
+                <SubMenu key="sub2" title={<span><Icon type="appstore" /><span>Navigtion Two</span></span>}>
+                    <Menu.Item key="5">Option 5</Menu.Item>
+                    <Menu.Item key="6">Option 6</Menu.Item>
+                    <SubMenu key="sub3" title="Submenu">
+                        <Menu.Item key="7">Option 7</Menu.Item>
+                        <Menu.Item key="8">Option 8</Menu.Item>
+                    </SubMenu>
+                </SubMenu>
+                <SubMenu key="sub4" title={<span><Icon type="setting" /><span>Navigation Three</span></span>}>
+                    <Menu.Item key="9">Option 9</Menu.Item>
+                    <Menu.Item key="10">Option 10</Menu.Item>
+                    <Menu.Item key="11">Option 11</Menu.Item>
+                    <Menu.Item key="12">Option 12</Menu.Item>
+                </SubMenu>
+            </Menu>
+
         </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
     );
   }
 }
